@@ -3,16 +3,16 @@ from typing import List, Union
 from pydantic import BaseModel
 
 
-class ItemBase(BaseModel):
-    title: str
-    description: Union[str, None] = None
+class PairsBase(BaseModel):
+    cardA: str
+    cardB: Union[str, None] = None
 
 
-class ItemCreate(ItemBase):
+class PairsCreate(PairsBase):
     pass
 
 
-class Item(ItemBase):
+class Pairs(PairsBase):
     id: int
     owner_id: int
 
@@ -31,7 +31,7 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    items: List[Item] = []
+    cards: List[Pairs] = []
 
     class Config:
         orm_mode = True

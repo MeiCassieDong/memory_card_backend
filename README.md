@@ -1,3 +1,6 @@
+This is a prototype backend project with python language.
+Below are the commands for running the project and the relevant website.
+
 //API website
 https://fastapi.tiangolo.com/
 
@@ -5,7 +8,7 @@ https://fastapi.tiangolo.com/
 pip install -r requirements.txt
 
 //run and depoloy server
-uvicorn server:app --reload
+uvicorn main:app --reload
 
 //set env before compile 
 . _env/bin/activate
@@ -16,13 +19,14 @@ python db.py
 docker run --name postgres -e POSTGRES_PASSWORD=gtgt  -p 5432:5432  -d postgres:12 //run docker
 docker ps //check docker process
 docker exec -it DOCKER_ID bash //get into docker, DOCKER_ID is named postgres in first line.
-psql -h localhost -p 5432 -U postgres //connect psql database
+psql -h localhost -p 5432 -U postgres //start to run psql command
 create database db;
 
 \c db //connect to db
 \dt //show tables
 create table games(content text);
 insert into games values ('game1');
+drop table games;
 
 //EndPoint
 fetch all cards:
@@ -49,3 +53,5 @@ Table cards
 UserId Cards
 0       Apple & Apfel
 0       Danke & Thank you
+
+https://k3d.io/v5.4.4/

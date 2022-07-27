@@ -12,15 +12,15 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    items = relationship("Item", back_populates="owner")
+    cards = relationship("Pairs", back_populates="owner")
 
 
-class Item(Base):
-    __tablename__ = "items"
+class Pairs(Base):
+    __tablename__ = "cards"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
+    cardA = Column(String, index=True)
+    cardB = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
-    owner = relationship("User", back_populates="items")
+    owner = relationship("User", back_populates="cards")
