@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-prd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-prd
+  template:
+    metadata:
+      labels:
+        app: postgres-prd
+    spec:
+      containers:
+      - name: run
+        image: local/postgres:12
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: POSTGRES_PASSWORD
+              optional: false # same as default; "mysecret" must exist
+        - name: POSTGRES_DB
+          value: db
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: 1
+          requests:
+            memory: "128Mi"
+            cpu: 0.5
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 20"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres-prd
+  name: postgres
+spec:
+  ports:
+  - name: psql
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres-prd
+  sessionAffinity: None
+  type: ClusterIP
+
+
